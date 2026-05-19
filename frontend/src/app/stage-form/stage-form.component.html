@@ -1,0 +1,82 @@
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="text-primary">{{ editMode ? 'Modifier le Stage' : 'Enregistrer un Nouveau Stage' }}</h2>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form [formGroup]="stageForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <!-- Student Info -->
+        <div class="col-md-6 form-group">
+          <label class="font-weight-bold">Étudiant <span class="text-danger">*</span></label>
+          <select formControlName="etudiant" class="form-control" [compareWith]="compareById">
+            <option [ngValue]="null">Sélectionnez un étudiant</option>
+            <option *ngFor="let e of etudiants" [ngValue]="e">{{ e.nom }} {{ e.prenom }} ({{ e.cne }})</option>
+          </select>
+        </div>
+
+        <!-- Academic Supervisor -->
+        <div class="col-md-6 form-group">
+          <label class="font-weight-bold">Encadrant Académique <span class="text-danger">*</span></label>
+          <select formControlName="encadrantAcademique" class="form-control" [compareWith]="compareById">
+            <option [ngValue]="null">Sélectionnez un encadrant</option>
+            <option *ngFor="let p of encadrants" [ngValue]="p">{{ p.nom }} - {{ p.departement }}</option>
+          </select>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="col-md-12 form-group">
+          <label class="font-weight-bold">Entreprise <span class="text-danger">*</span></label>
+          <select formControlName="entreprise" class="form-control" [compareWith]="compareById">
+            <option [ngValue]="null">Sélectionnez une entreprise</option>
+            <option *ngFor="let ent of entreprises" [ngValue]="ent">{{ ent.nom }} ({{ ent.ville }})</option>
+          </select>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <label class="font-weight-bold">Sujet du Stage <span class="text-danger">*</span></label>
+          <input type="text" formControlName="sujet" class="form-control" placeholder="Titre du projet">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label class="font-weight-bold">Date de début <span class="text-danger">*</span></label>
+          <input type="date" formControlName="dateDebut" class="form-control">
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label class="font-weight-bold">Date de fin <span class="text-danger">*</span></label>
+          <input type="date" formControlName="dateFin" class="form-control">
+        </div>
+
+        <div class="col-md-12 form-group">
+          <label class="font-weight-bold">Description / Objectifs</label>
+          <textarea formControlName="description" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label class="font-weight-bold">Démarche</label>
+          <textarea formControlName="demarche" class="form-control" rows="2" placeholder="Méthodologie utilisée"></textarea>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label class="font-weight-bold">Solution</label>
+          <textarea formControlName="solution" class="form-control" rows="2" placeholder="Solution apportée"></textarea>
+        </div>
+
+        <div class="col-md-12 form-group">
+          <label class="font-weight-bold">Technologies & Outils</label>
+          <input type="text" formControlName="outils" class="form-control" placeholder="Java, Angular, etc.">
+        </div>
+      </div>
+
+      <div class="mt-4 text-right">
+        <a routerLink="/" class="btn btn-outline-secondary mr-2">Annuler</a>
+        <button type="submit" class="btn btn-primary" [disabled]="stageForm.invalid">
+          Enregistrer le Stage
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

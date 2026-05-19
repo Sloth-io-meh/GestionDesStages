@@ -1,0 +1,22 @@
+#wrapper {
+    min-height: 100vh;
+}
+
+#wrapper.bg-gradient-primary #content-wrapper {
+    background-color: transparent;
+}
+
+#content-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.sticky-footer {
+    padding: 2rem 0;
+    flex-shrink: 0;
+}
+
+/* Ensure content takes full height when not logged in */
+#content {
+    flex: 1 0 auto;
+}

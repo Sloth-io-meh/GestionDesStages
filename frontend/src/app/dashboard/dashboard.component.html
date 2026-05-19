@@ -1,0 +1,136 @@
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="text-primary"><i class="fas fa-tachometer-alt mr-2"></i>Tableau de Bord</h2>
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="col-md-3">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Stages</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalStages }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-briefcase fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Étudiants</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalStudents }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Filières</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalFilieres }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-university fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Entreprises</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalEntreprises }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-building fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between bg-white">
+        <h6 class="m-0 font-weight-bold text-primary">Derniers Stages Enregistrés</h6>
+        <a routerLink="/stages" class="btn btn-sm btn-link text-primary">Voir tout</a>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="thead-light">
+              <tr>
+                <th>Étudiant</th>
+                <th>Sujet</th>
+                <th>Entreprise</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let s of recentStages">
+                <td>{{ s.etudiant?.nom }} {{ s.etudiant?.prenom }}</td>
+                <td><span class="text-truncate d-inline-block" style="max-width: 200px;">{{ s.sujet }}</span></td>
+                <td>{{ s.entreprise?.nom }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <!-- Filiere Breakdown -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-white">
+        <h6 class="m-0 font-weight-bold text-primary">Répartition par Filière</h6>
+      </div>
+      <div class="card-body">
+        <div class="mb-4" *ngFor="let f of filiereBreakdown">
+          <div class="small font-weight-bold">{{ f.intitule }} <span class="float-right">{{ f.count }}</span></div>
+          <div class="progress progress-sm mr-2">
+            <div class="progress-bar bg-info" role="progressbar" [style.width.%]="f.percentage"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow mb-4">
+      <div class="card-header py-3 bg-white">
+        <h6 class="m-0 font-weight-bold text-primary">Actions Rapides</h6>
+      </div>
+      <div class="card-body">
+        <a routerLink="/stages/nouveau" class="btn btn-primary btn-block mb-2 shadow-sm">
+          <i class="fas fa-plus mr-2"></i>Nouveau Stage
+        </a>
+        <a routerLink="/etudiants/nouveau" class="btn btn-success btn-block mb-2 shadow-sm">
+          <i class="fas fa-user-plus mr-2"></i>Nouvel Étudiant
+        </a>
+        <a routerLink="/filieres/nouveau" class="btn btn-info btn-block mb-2 shadow-sm">
+          <i class="fas fa-plus-circle mr-2"></i>Nouvelle Filière
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

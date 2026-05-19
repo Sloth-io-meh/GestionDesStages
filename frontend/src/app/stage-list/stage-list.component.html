@@ -1,0 +1,215 @@
+<!-- Statistics Cards -->
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Stages</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalStages }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-briefcase fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Étudiants</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalStudents }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Filières</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalFilieres }}</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-university fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-4 align-items-center">
+  <div class="col">
+    <h2 class="text-primary mb-0">Gestion des Stages</h2>
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-outline-secondary mr-2 shadow-sm" (click)="exportAllPdf()">
+      <i class="fas fa-file-pdf mr-2"></i>Exporter tout
+    </button>
+    <a routerLink="/stages/nouveau" class="btn btn-success shadow-sm">
+      <i class="fas fa-plus mr-2"></i>Nouveau Stage
+    </a>
+  </div>
+</div>
+
+<!-- Filters and Search -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Rechercher (étudiant, sujet...)" (input)="onSearch($event)">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control" (change)="onFiliereChange($event)" [value]="selectedFiliereId || ''">
+          <option value="">Toutes les filières</option>
+          <option *ngFor="let f of filieres" [value]="f.id">{{ f.intitule }}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control" (change)="onYearChange($event)" [value]="selectedYear || ''">
+          <option value="">Toutes les années</option>
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mt-3" *ngIf="selectedFiliereId">
+      <div class="col">
+        <div class="alert alert-info border-0 shadow-sm" *ngIf="getSelectedFiliere() as f">
+          <h6 class="alert-heading font-weight-bold"><i class="fas fa-user-tie mr-2"></i>Responsable de Filière</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <strong>{{ f.responsable?.nom }} {{ f.responsable?.prenom }}</strong> ({{ f.responsable?.grade }})
+            </div>
+            <div class="col-md-6 text-md-right">
+              <i class="fas fa-envelope mr-1"></i>{{ f.responsable?.email }} | <i class="fas fa-phone mr-1"></i>{{ f.responsable?.tel }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-auto align-self-center">
+        <button class="btn btn-outline-info btn-sm" (click)="exportFilierePdf()">
+          <i class="fas fa-file-pdf mr-1"></i>Exporter Rapport Filière
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="card shadow-sm">
+  <div class="card-body p-0">
+    <table class="table table-hover mb-0">
+      <thead class="thead-light">
+        <tr>
+          <th>Étudiant</th>
+          <th>Sujet</th>
+          <th>Entreprise</th>
+          <th>Période</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of paginatedStages">
+          <td>
+            <strong>{{ s.etudiant?.nom }} {{ s.etudiant?.prenom }}</strong><br>
+            <small class="text-muted">{{ s.etudiant?.cne }}</small>
+          </td>
+          <td>
+            <span class="d-inline-block text-truncate" style="max-width: 250px;" [title]="s.sujet">
+              {{ s.sujet }}
+            </span>
+          </td>
+          <td>
+            {{ s.entreprise?.nom }}<br>
+            <small class="text-muted">{{ s.entreprise?.ville }}</small>
+          </td>
+          <td>
+            <small class="badge badge-light border">{{ s.dateDebut }} au {{ s.dateFin }}</small>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <a [routerLink]="['/stages/modifier', s.id]" class="btn btn-sm btn-outline-primary" title="Modifier">
+                <i class="fas fa-edit"></i>
+              </a>
+              <button class="btn btn-sm btn-outline-secondary" (click)="exportPdf(s.id)" title="Exporter PDF">
+                <i class="fas fa-file-pdf"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteStage(s.id)" title="Supprimer">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="filteredStages.length === 0">
+          <td colspan="5" class="text-center py-5 text-muted">
+            <i class="fas fa-folder-open fa-3x mb-3 d-block"></i>
+            Aucun stage trouvé pour votre recherche.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer bg-white border-top-0 py-3" *ngIf="filteredStages.length > 0">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-muted small">
+        Affichage de {{ startIndex + 1 }} à {{ endIndex }} sur {{ filteredStages.length }} stages
+      </div>
+      <div class="col-md-4">
+        <nav *ngIf="totalPages > 1">
+          <ul class="pagination justify-content-center mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="setPage(1)" style="cursor: pointer;" title="Premier">
+                <i class="fas fa-angle-double-left"></i>
+              </a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <a class="page-link" (click)="setPage(currentPage - 1)" style="cursor: pointer;" title="Précédent">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let page of getPages()" [class.active]="currentPage === page">
+              <a class="page-link" (click)="setPage(page)" style="cursor: pointer;">{{ page }}</a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="setPage(currentPage + 1)" style="cursor: pointer;" title="Suivant">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <a class="page-link" (click)="setPage(totalPages)" style="cursor: pointer;" title="Dernier">
+                <i class="fas fa-angle-double-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-4 text-right">
+        <div class="form-inline justify-content-end">
+          <label class="mr-2 small text-muted">Afficher:</label>
+          <select class="form-control form-control-sm w-auto" (change)="onPageSizeChange($event)" [value]="pageSize">
+            <option [value]="5">5</option>
+            <option [value]="10">10</option>
+            <option [value]="25">25</option>
+            <option [value]="50">50</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

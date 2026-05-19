@@ -1,0 +1,54 @@
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="text-primary">{{ editMode ? 'Modifier' : 'Nouvelle' }} Filière</h2>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <form [formGroup]="filiereForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-4">
+        <label class="font-weight-bold">Intitule de la Filière</label>
+        <input type="text" class="form-control form-control-lg" formControlName="intitule" placeholder="Ex: Ingénierie des Systèmes d'Information">
+      </div>
+
+      <hr>
+      <h5 class="text-secondary mb-3"><i class="fas fa-user-tie mr-2"></i>Responsable de la Filière</h5>
+      
+      <div formGroupName="responsable">
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Nom</label>
+            <input type="text" class="form-control" formControlName="nom">
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Prénom</label>
+            <input type="text" class="form-control" formControlName="prenom">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <label>Grade</label>
+            <input type="text" class="form-control" formControlName="grade" placeholder="Ex: Professeur">
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" formControlName="email">
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Téléphone</label>
+            <input type="text" class="form-control" formControlName="tel">
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 text-right">
+        <button type="button" class="btn btn-secondary mr-2" routerLink="/filieres">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="filiereForm.invalid">
+          {{ editMode ? 'Mettre à jour' : 'Enregistrer' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

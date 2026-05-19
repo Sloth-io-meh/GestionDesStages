@@ -1,0 +1,36 @@
+<div class="row mb-4">
+  <div class="col">
+    <h2 class="text-primary">{{ editMode ? 'Modifier' : 'Nouvel' }} Encadrant Académique</h2>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form [formGroup]="encadrantForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-6 form-group">
+          <label>Nom complet</label>
+          <input type="text" class="form-control" formControlName="nom" placeholder="Ex: Dr. Ahmed Alami">
+        </div>
+        <div class="col-md-6 form-group">
+          <label>Département</label>
+          <input type="text" class="form-control" formControlName="departement" placeholder="Ex: Informatique">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <label>Établissement</label>
+          <input type="text" class="form-control" formControlName="etablissement" placeholder="Ex: Faculté des Sciences Semlalia">
+        </div>
+      </div>
+
+      <div class="mt-4 text-right">
+        <button type="button" class="btn btn-secondary mr-2" routerLink="/encadrants">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="encadrantForm.invalid">
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
