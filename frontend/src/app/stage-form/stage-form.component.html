@@ -11,28 +11,19 @@
         <!-- Student Info -->
         <div class="col-md-6 form-group">
           <label class="font-weight-bold">Étudiant <span class="text-danger">*</span></label>
-          <select formControlName="etudiant" class="form-control" [compareWith]="compareById">
-            <option [ngValue]="null">Sélectionnez un étudiant</option>
-            <option *ngFor="let e of etudiants" [ngValue]="e">{{ e.nom }} {{ e.prenom }} ({{ e.cne }})</option>
-          </select>
+          <app-searchable-select formControlName="etudiant" [items]="etudiants" [labelFn]="etudiantLabel" placeholder="Sélectionnez un étudiant"></app-searchable-select>
         </div>
 
         <!-- Academic Supervisor -->
         <div class="col-md-6 form-group">
           <label class="font-weight-bold">Encadrant Académique <span class="text-danger">*</span></label>
-          <select formControlName="encadrantAcademique" class="form-control" [compareWith]="compareById">
-            <option [ngValue]="null">Sélectionnez un encadrant</option>
-            <option *ngFor="let p of encadrants" [ngValue]="p">{{ p.nom }} - {{ p.departement }}</option>
-          </select>
+          <app-searchable-select formControlName="encadrantAcademique" [items]="encadrants" [labelFn]="encadrantLabel" placeholder="Sélectionnez un encadrant"></app-searchable-select>
         </div>
 
         <!-- Enterprise -->
         <div class="col-md-12 form-group">
           <label class="font-weight-bold">Entreprise <span class="text-danger">*</span></label>
-          <select formControlName="entreprise" class="form-control" [compareWith]="compareById">
-            <option [ngValue]="null">Sélectionnez une entreprise</option>
-            <option *ngFor="let ent of entreprises" [ngValue]="ent">{{ ent.nom }} ({{ ent.ville }})</option>
-          </select>
+          <app-searchable-select formControlName="entreprise" [items]="entreprises" [labelFn]="entrepriseLabel" placeholder="Sélectionnez une entreprise"></app-searchable-select>
         </div>
 
         <div class="col-md-12 form-group">

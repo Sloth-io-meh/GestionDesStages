@@ -18,6 +18,10 @@ export class StageFormComponent implements OnInit {
   editMode = false;
   stageId: number | null = null;
 
+  etudiantLabel = (e: Etudiant) => `${e.nom} ${e.prenom} (${e.cne})`;
+  encadrantLabel = (e: EncadrantAcademique) => `${e.nom} - ${e.departement}`;
+  entrepriseLabel = (e: Entreprise) => `${e.nom} (${e.ville})`;
+
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,

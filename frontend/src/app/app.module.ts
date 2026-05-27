@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
 import { ZoneInterceptor } from './zone.interceptor';
+import { SearchableSelectComponent } from './searchable-select.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ZoneInterceptor } from './zone.interceptor';
     EncadrantListComponent,
     EncadrantFormComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    SearchableSelectComponent
   ],
   imports: [
     BrowserModule,

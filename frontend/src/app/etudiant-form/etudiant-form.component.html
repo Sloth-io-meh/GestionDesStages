@@ -36,10 +36,7 @@
         </div>
         <div class="col-md-6 form-group">
           <label>Filière</label>
-          <select class="form-control" formControlName="filiere" [compareWith]="compareById">
-            <option [ngValue]="null">Sélectionner une filière</option>
-            <option *ngFor="let f of filieres" [ngValue]="f">{{ f.intitule }}</option>
-          </select>
+          <app-searchable-select formControlName="filiere" [items]="filieres" bindLabel="intitule" placeholder="Sélectionner une filière"></app-searchable-select>
         </div>
       </div>
 
