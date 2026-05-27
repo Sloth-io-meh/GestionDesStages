@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Stage, Filiere } from '../models';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-stage-list',
   templateUrl: './stage-list.component.html',
   styleUrls: ['./stage-list.component.css']
@@ -30,7 +31,8 @@ export class StageListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -41,30 +43,21 @@ export class StageListComponent implements OnInit {
 
   loadStages() {
     this.apiService.getStages().subscribe(
-      data => {
-        this.stages = data;
-        this.stats.totalStages = data.length;
-        this.applyFilter();
-      },
+      data => { this.stages = data; this.stats.totalStages = data.length; this.applyFilter(); this.cdr.detectChanges(); },
       error => this.notificationService.error('Erreur lors du chargement des stages')
     );
   }
 
   loadFilieres() {
     this.apiService.getFilieres().subscribe(
-      data => {
-        this.filieres = data;
-        this.stats.totalFilieres = data.length;
-      },
+      data => { this.filieres = data; this.stats.totalFilieres = data.length; this.cdr.detectChanges(); },
       error => this.notificationService.error('Erreur lors du chargement des filières')
     );
   }
 
   loadStudents() {
     this.apiService.getEtudiants().subscribe(
-      data => {
-        this.stats.totalStudents = data.length;
-      },
+      data => { this.stats.totalStudents = data.length; this.cdr.detectChanges(); },
       error => this.notificationService.error('Erreur lors du chargement des étudiants')
     );
   }

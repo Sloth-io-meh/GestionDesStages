@@ -5,6 +5,7 @@ import { ApiService } from '../api.service';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-filiere-form',
   templateUrl: './filiere-form.component.html'
 })

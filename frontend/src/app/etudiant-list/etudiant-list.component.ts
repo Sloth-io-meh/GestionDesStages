@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Etudiant } from '../models';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-etudiant-list',
   templateUrl: './etudiant-list.component.html'
 })
@@ -18,7 +19,8 @@ export class EtudiantListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -27,10 +29,7 @@ export class EtudiantListComponent implements OnInit {
 
   loadEtudiants() {
     this.apiService.getEtudiants().subscribe(
-      data => {
-        this.etudiants = data;
-        this.applyFilter();
-      },
+      data => { this.etudiants = data; this.applyFilter(); this.cdr.detectChanges(); },
       error => this.notificationService.error('Erreur chargement étudiants')
     );
   }

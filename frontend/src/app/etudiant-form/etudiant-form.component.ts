@@ -6,6 +6,7 @@ import { Filiere } from '../models';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-etudiant-form',
   templateUrl: './etudiant-form.component.html'
 })

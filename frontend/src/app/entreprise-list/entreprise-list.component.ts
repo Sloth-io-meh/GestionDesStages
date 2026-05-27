@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Entreprise } from '../models';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-entreprise-list',
   templateUrl: './entreprise-list.component.html'
 })
@@ -18,7 +19,8 @@ export class EntrepriseListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -27,10 +29,7 @@ export class EntrepriseListComponent implements OnInit {
 
   loadEntreprises() {
     this.apiService.getEntreprises().subscribe(
-      data => {
-        this.entreprises = data;
-        this.applyFilter();
-      },
+      data => { this.entreprises = data; this.applyFilter(); this.cdr.detectChanges(); },
       error => this.notificationService.error('Erreur chargement entreprises')
     );
   }

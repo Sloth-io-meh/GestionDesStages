@@ -6,6 +6,7 @@ import { Etudiant, Entreprise, EncadrantAcademique } from '../models';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-stage-form',
   templateUrl: './stage-form.component.html'
 })

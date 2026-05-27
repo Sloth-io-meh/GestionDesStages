@@ -5,6 +5,7 @@ import { ApiService } from '../api.service';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-encadrant-form',
   templateUrl: './encadrant-form.component.html'
 })

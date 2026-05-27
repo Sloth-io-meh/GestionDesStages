@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: './login.component.html'
 })

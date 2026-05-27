@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../api.service';
 import { EncadrantAcademique } from '../models';
 import { NotificationService } from '../notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-encadrant-list',
   templateUrl: './encadrant-list.component.html'
 })
@@ -18,7 +19,8 @@ export class EncadrantListComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -27,10 +29,7 @@ export class EncadrantListComponent implements OnInit {
 
   loadEncadrants() {
     this.apiService.getEncadrants().subscribe(
-      data => {
-        this.encadrants = data;
-        this.applyFilter();
-      },
+      data => { this.encadrants = data; this.applyFilter(); this.cdr.detectChanges(); },
       error => this.notificationService.error('Erreur chargement encadrants')
     );
   }
